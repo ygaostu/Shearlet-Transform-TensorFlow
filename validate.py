@@ -14,9 +14,10 @@ if __name__ == "__main__":
     start = time.time()
     parser = argparse.ArgumentParser()
     parser.add_argument("--batch_size", default=4, type=int)
-    parser.add_argument("--validate_path", type=str, default="./decimated_epi_pre_sheared")
-    parser.add_argument("--save_path", type=str, default="./reconstructed_dsepi_pre_sheared")
+    parser.add_argument("--validate_path", type=str, default="./data/ssepi")
+    parser.add_argument("--save_path", type=str, default="./data/rec_dsepi")
     parser.add_argument("--tensorboard_path", type=str, default="./tensorboard")
+    parser.add_argument("--shearlet_system_path", type=str, default="./model")
     parser.add_argument("-d", "--debug", action="store_true", default=False, help="Debug logging output")
     args = parser.parse_args()
 
@@ -49,9 +50,10 @@ if __name__ == "__main__":
     estimator = tf.estimator.Estimator(
         model_fn=model.create_model,
         params={
-            "num_output_channels": 3,
             "batch_size": args.batch_size,
             "tensorboard_dir": args.tensorboard_path,
+            "shearlet_system_dir": args.shearlet_system_path,
+            "num_output_channels": 3,
             "height": 128,
             "width": 608, 
             "alpha": 2,
@@ -70,6 +72,6 @@ if __name__ == "__main__":
         save_name, im_rec = pred_dict["save_name"].decode("utf-8"), pred_dict["image"]
         im_rec = cv2.cvtColor(im_rec, cv2.COLOR_RGB2BGR)
         cv2.imwrite(save_name, im_rec)
-        print(save_name)
+        print("Image saved in", save_name)
         
-    print('need time:{:.3f} s'.format(time.time() - start) )
+    print('Required time: {:.3f} s'.format(time.time() - start) )

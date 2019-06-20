@@ -1,10 +1,20 @@
 # Shearlet-Transform-TensorFlow
-This is an implementation of Shearlet Transform (ST) [1, 2] for light field reconstruction using TensorFlow.
+This is an implementation of Shearlet Transform (ST) [1, 2] for light field reconstruction using TensorFlow. If you find this code useful in your research, please consider citing [1, 2] and 
+
+    @inproceedings{tfst2019,
+	Author = {Gao, Yuan and Koch, Reinhard and Bregovic, Robert and Gotchev, Atanas},
+	Title = {Light Field Reconstruction Using Shearlet Transform in TensorFlow},
+	Booktitle = {ICME Workshops},
+	Year = {2019}
+    }
+
+This code was tested on an Ubuntu 18.04 system using Tensorflow 1.13.1.
 
 ## Introduction ##
 ST is designed for reconstructing a
 Densely-Sampled Light Field (DSLF) from a Sparsely-Sampled
-Light Field (SSLF). It typically consists of pre-shearing, shearlet system construction, sparse regularization and post-shearing. This TensorFlow implementation of ST focuses on sparse regularization, which is composed of analysis transform, hard thresholding, synthesis transform and double overrelaxation. A dataflow graph of these four components are illustrated as below:
+Light Field (SSLF). It typically consists of pre-shearing, shearlet system construction, sparsity regularization and post-shearing. This TensorFlow implementation of ST focuses on sparsity regularization, which is composed of analysis transform, hard thresholding, synthesis transform and double overrelaxation. A dataflow graph of these four components are illustrated as below:
+
 ![alt text](Fig/sparse_regularization.png "sparse regularization")
 
 
@@ -24,7 +34,7 @@ conda install -c conda-forge opencv
 ### Prepare datasets ###
 Prepare your pre-sheared sparsely-sampled Epipolar-Plane Images (EPIs) and masks. Put them into folders like
 ```
-./decimated_epi_pre_sheared/dishes_r5
+./data/ssepi/dishes_r5
 ```
 and name them like
 ```
@@ -35,17 +45,18 @@ and name them like
 For example, "0458_rgb.png" and "0458_mask.png" are presented as follows:
 
 ![alt text](Fig/0458_rgb.png "0458_rgb.png")
+
 ![alt text](Fig/0458_mask.png "0458_mask.png")
 
-### ST reconstruction ### 
+### Sparsity Regularization ### 
 ```
-python validate.py --validate_path=./decimated_epi_pre_sheared --save_path=./reconstructed_dsepi_pre_sheared --batch_size=4 --tensorboard_path=./tensorboard
+python validate.py --validate_path=./data/ssepi/ --save_path=./data/rec_dsepi --batch_size=4 --tensorboard_path=./tensorboard --shearlet_system_path=./model
 ```
 The reconstructed EPI corresponding to "0458_rgb.png" is presented as follows:
 
 ![alt text](Fig/0458_rgb_reconstructed.png "0458_rgb_reconstructed.png")
 
-The missing "model.py" and "data.py" will be uploaded soon.
+Note that the shearlet system for the sparsely-sampled and pre-sheared EPIs should be prepared in advance. It is placed in the folder "./model" by default. How to generate a specially-tailored shearlet system can be found in this [repository](http://www.cs.tut.fi/~vagharsh/EPISparseRec.html).
 
 ### Visualization ###
 The visualization of the pipline of ST is performed using TensorBoard:
