@@ -32,7 +32,7 @@ conda install tensorflow-gpu
 conda install -c conda-forge opencv
 ```
 ### Prepare datasets ###
-Prepare your pre-sheared sparsely-sampled Epipolar-Plane Images (EPIs) and masks. Put them into folders like
+Prepare the pre-sheared sparsely-sampled Epipolar-Plane Images (EPIs) and masks. Put them into folders like
 ```
 ./data/ssepi/dishes_r5
 ```
@@ -56,7 +56,7 @@ The reconstructed EPI corresponding to "0458_rgb.png" is presented as follows:
 
 ![alt text](Fig/0458_rgb_reconstructed.png "0458_rgb_reconstructed.png")
 
-Note that the shearlet system for the sparsely-sampled and pre-sheared EPIs should be prepared in advance. It is placed in the folder "./model" by default. How to generate a specially-tailored shearlet system can be found in this [repository](http://www.cs.tut.fi/~vagharsh/EPISparseRec.html).
+Note that the shearlet system for the pre-sheared sparsely-sampled EPIs should be prepared in advance. It is placed in the folder "./model" by default. How to generate a specially-tailored shearlet system can be found in this [repository](http://www.cs.tut.fi/~vagharsh/EPISparseRec.html).
 
 ### Visualization ###
 The visualization of the pipline of ST is performed using TensorBoard:
