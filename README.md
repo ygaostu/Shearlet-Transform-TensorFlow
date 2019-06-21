@@ -8,7 +8,7 @@ This is an implementation of Shearlet Transform (ST) [1, 2] for light field reco
 	Year = {2019}
     }
 
-This code was tested on an Ubuntu 18.04 system using Tensorflow 1.13.1.
+This code was tested on an Ubuntu 18.04 system using Tensorflow 1.13.1. Here is the associated [poster](http://data.mip.informatik.uni-kiel.de:555/wwwadmin/Publica/Presentations/2019_Gao_ICME_Workshop.pdf) presented at [ICME 2019 Demo/Expo](https://www.icme2019.org/conf_demo).
 
 ## Introduction ##
 ST is designed for reconstructing a
