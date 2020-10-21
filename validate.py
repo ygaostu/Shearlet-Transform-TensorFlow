@@ -6,9 +6,8 @@ import logging
 import model
 import data
 import numpy as np
-import matplotlib.pyplot as plt
-import cv2
 import time
+from PIL import Image
 
 if __name__ == "__main__":
     start = time.time()
@@ -70,8 +69,7 @@ if __name__ == "__main__":
 
     for i, pred_dict in enumerate(predictions):
         save_name, im_rec = pred_dict["save_name"].decode("utf-8"), pred_dict["image"]
-        im_rec = cv2.cvtColor(im_rec, cv2.COLOR_RGB2BGR)
-        cv2.imwrite(save_name, im_rec)
+        Image.fromarray(im_rec).save(save_name)
         print("Image saved in", save_name)
         
     print('Required time: {:.3f} s'.format(time.time() - start) )
