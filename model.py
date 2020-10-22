@@ -44,7 +44,6 @@ def sparisty_regularization(ss_epi_im, mask, thresholds, alpha, dec_fft, rec_fft
 
     return tf.cast(fi, tf.float32)
 
-
 def load_shearlet_system(path, height, width):
     try:
         fmat = sio.loadmat(path)
@@ -130,7 +129,6 @@ def create_model(features, labels, mode, params={}):
                 )
     # Add it to the evaluation_hook list
     prediction_hooks.append(pred_summary_hook)
-
 
     if mode == tf.estimator.ModeKeys.PREDICT:
         predictions = { 

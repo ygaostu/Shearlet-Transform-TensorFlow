@@ -1,8 +1,6 @@
 import tensorflow as tf
+import os, shutil
 from glob import glob
-import os
-import logging
-import shutil
 
 def rm_dir(dname):
     if os.path.exists(dname):

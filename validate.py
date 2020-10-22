@@ -1,13 +1,9 @@
-import argparse
 import tensorflow as tf
-import os
-import time
-import logging
-import model
-import data
 import numpy as np
-import time
+import time, argparse
 from PIL import Image
+from data import create_image_dataset
+from model import create_model
 
 if __name__ == "__main__":
     start = time.time()
@@ -17,37 +13,23 @@ if __name__ == "__main__":
     parser.add_argument("--save_path", type=str, default="./data/rec_dsepi")
     parser.add_argument("--tensorboard_path", type=str, default="./tensorboard")
     parser.add_argument("--shearlet_system_path", type=str, default="./model")
-    parser.add_argument("-d", "--debug", action="store_true", default=False, help="Debug logging output")
     args = parser.parse_args()
 
+    # setup logging
     tf.logging.set_verbosity(tf.logging.INFO)
-
-    # set up logging
-    logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG if args.debug else logging.INFO)
-    handler = logging.StreamHandler()
-    handler.setLevel(logging.DEBUG if args.debug else logging.INFO)
-    formatter = logging.Formatter("%(asctime)s: %(levelname)s - %(message)s")
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-
-    # setup dataset
-    create_dataset = data.create_image_dataset
 
     dataset_params = {
         "validate_path": args.validate_path,
         "save_path": args.save_path,
     }
 
-    logging.info("Dataset params: %s" % str(dataset_params))
-
     def validate_fn():
-        dataset_eval = create_dataset(train=False, params=dataset_params).batch(args.batch_size)
+        dataset_eval = create_image_dataset(train=False, params=dataset_params).batch(args.batch_size)
         eval_it = dataset_eval.make_one_shot_iterator()
         return eval_it.get_next()
 
     estimator = tf.estimator.Estimator(
-        model_fn=model.create_model,
+        model_fn=create_model,
         params={
             "batch_size": args.batch_size,
             "tensorboard_dir": args.tensorboard_path,
