@@ -12,7 +12,7 @@ if __name__ == "__main__":
     parser.add_argument("--validate_path", type=str, default="./data/ssepi")
     parser.add_argument("--save_path", type=str, default="./data/rec_dsepi")
     parser.add_argument("--tensorboard_path", type=str, default="./tensorboard")
-    parser.add_argument("--shearlet_system_path", type=str, default="./model")
+    parser.add_argument("--shearlet_system_path", type=str, default="./model/st_127_127_4.mat")
     args = parser.parse_args()
 
     # setup logging
@@ -33,7 +33,7 @@ if __name__ == "__main__":
         params={
             "batch_size": args.batch_size,
             "tensorboard_dir": args.tensorboard_path,
-            "shearlet_system_dir": args.shearlet_system_path,
+            "shearlet_system_path": args.shearlet_system_path,
             "num_output_channels": 3,
             "height": 128,
             "width": 608, 

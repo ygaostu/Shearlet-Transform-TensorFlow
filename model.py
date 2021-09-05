@@ -82,7 +82,7 @@ def load_shearlet_system(path, height, width):
 
 def create_model(features, labels, mode, params={}):
     tensorboard_dir = params["tensorboard_dir"]
-    shearlet_system_dir = params["shearlet_system_dir"]
+    shearlet_system_path = params["shearlet_system_path"]
     ch = params["num_output_channels"]
     batch_size = params["batch_size"]
     height = params["height"]
@@ -93,7 +93,7 @@ def create_model(features, labels, mode, params={}):
     thmin = params["thmin"]
 
     with tf.name_scope("Load_Shearlet_System"):
-        dec_fft, rec_fft, w_st = load_shearlet_system(os.path.join(shearlet_system_dir, "st_127_127_4.mat"), height, width)
+        dec_fft, rec_fft, w_st = load_shearlet_system(shearlet_system_path, height, width)
     thresholds = tf.constant(np.linspace(thmax, thmin, niter), tf.float32)
 
     im = features["im_epi"]
