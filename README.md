@@ -2,7 +2,8 @@
 
 [![paper](https://img.shields.io/badge/-Paper-green)](http://data.mip.informatik.uni-kiel.de:555/wwwadmin/Publica/2019/2019_Gao_Light%20Field%20Reconstruction%20Using%20Shearlet%20Transform%20in%20TensorFlow.pdf)
 [![poster](https://img.shields.io/badge/-Poster-red)](http://data.mip.informatik.uni-kiel.de:555/wwwadmin/Publica/Presentations/2019_Gao_ICME_Workshop.pdf) 
-[![video](https://img.shields.io/badge/YouTube-Video-orange)](http://www.youtube.com/watch?v=5eQ-upVniYo "iterative sparse regularization")  
+[![video](https://img.shields.io/badge/YouTube-Video-orange)](http://www.youtube.com/watch?v=5eQ-upVniYo "iterative sparse regularization") 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1oJgEMMykxhQJFSMqVfZvNj6CKOeAycaI?usp=sharing)  
 This is an implementation of Shearlet Transform (ST) [1, 2] for light field reconstruction using ***TensorFlow 1***. If you find this code useful in your research, please consider citing [1, 2] and 
 ```
 @inproceedings{gao2019light,
@@ -14,6 +15,9 @@ This is an implementation of Shearlet Transform (ST) [1, 2] for light field reco
 }
 ```
 This code was tested on an Ubuntu 18.04 system using Tensorflow 1.15.4 and an NVIDIA GeForce RTX 2080 Ti GPU. 
+
+News:
+- [2021/09/05] Demo with Google Colab implemented in TF2 is available.
 
 ## Introduction ##
 ST is designed for reconstructing a Densely-Sampled Light Field (DSLF) from a Sparsely-Sampled
@@ -45,16 +49,18 @@ For example, "0458_rgb.png" and "0458_mask.png" are presented as follows:
 ![alt text](Fig/0458_rgb.png "0458_rgb.png")  
 ![alt text](Fig/0458_mask.png "0458_mask.png")
 
+Note that the pre-shearing process has already been performed in the above images. The sampling interval is 16 pixels and the maximum disparity range is also 16 pixels. Therefore, we choose to use a shearlet system with 4 scales to perform the EPI reconstruction as below:
+
 ### Sparse Regularization ### 
 ``` bash
 $ docker run --gpus all --env CUDA_VISIBLE_DEVICES=0 -v $PWD:/data -w /data --user $(id -u):$(id -g) -it --rm tf1:1.0 \
-  python validate.py --validate_path=./data/ssepi/ --save_path=./data/rec_dsepi --batch_size=4 --tensorboard_path=./tensorboard --shearlet_system_path=./model
+  python validate.py --validate_path=./data/ssepi/ --save_path=./data/rec_dsepi --batch_size=4 --tensorboard_path=./tensorboard --shearlet_system_path=./model/st_127_127_4.mat
 ```
 The reconstructed EPI corresponding to "0458_rgb.png" is presented as follows:
 
 ![alt text](Fig/0458_rgb_reconstructed.png "0458_rgb_reconstructed.png")
 
-Note that the shearlet system for the pre-sheared sparsely-sampled EPIs should be prepared in advance. It is placed in the folder "./model" by default. How to generate a specially-tailored shearlet system can be found in this [repository](http://www.cs.tut.fi/~vagharsh/EPISparseRec.html).
+Note that the shearlet system for the pre-sheared sparsely-sampled EPIs should be prepared in advance. It is placed in the folder "./model" by default. How to generate a specially-tailored shearlet system can be found in this [GitHub repository](https://github.com/ygaostu/shearlets).
 
 ### Visualization ###
 The visualization of the pipline of ST is performed using TensorBoard:
