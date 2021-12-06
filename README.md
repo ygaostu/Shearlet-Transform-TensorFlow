@@ -29,7 +29,7 @@ Light Field (SSLF). It typically consists of pre-shearing, shearlet system const
 ## Getting started ##
 ### Python requirements ###
 ``` bash
-$ git clone git@github.com:ygaostu/Shearlet-Transform-TensorFlow.git
+$ git clone --recurse-submodules git@github.com:ygaostu/Shearlet-Transform-TensorFlow.git
 $ cd Shearlet-Transform-TensorFlow
 $ docker build -t tf1:1.0 .
 ```
@@ -54,13 +54,13 @@ Note that the pre-shearing process has already been performed in the above image
 ### Sparse Regularization ### 
 ``` bash
 $ docker run --gpus all --env CUDA_VISIBLE_DEVICES=0 -v $PWD:/data -w /data --user $(id -u):$(id -g) -it --rm tf1:1.0 \
-  python validate.py --validate_path=./data/ssepi/ --save_path=./data/rec_dsepi --batch_size=4 --tensorboard_path=./tensorboard --shearlet_system_path=./model/st_127_127_4.mat
+  python validate.py --validate_path=./data/ssepi/ --save_path=./data/rec_dsepi --batch_size=4 --tensorboard_path=./tensorboard --shearlet_system_path=./model/shearlet_systems/st_127_127_4.mat
 ```
 The reconstructed EPI corresponding to "0458_rgb.png" is presented as follows:
 
 ![alt text](Fig/0458_rgb_reconstructed.png "0458_rgb_reconstructed.png")
 
-Note that the shearlet system for the pre-sheared sparsely-sampled EPIs should be prepared in advance. It is placed in the folder "./model" by default. How to generate a specially-tailored shearlet system can be found in this [GitHub repository](https://github.com/ygaostu/shearlets).
+Note that the shearlet system for the pre-sheared sparsely-sampled EPIs should be prepared in advance. It is placed in the folder "./model/shearlet_systems" by default. How to generate a specially-tailored shearlet system can be found in this [GitHub repository](https://github.com/ygaostu/shearlets).
 
 ### Visualization ###
 The visualization of the pipline of ST is performed using TensorBoard:

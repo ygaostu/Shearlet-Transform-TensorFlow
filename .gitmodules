@@ -1,6 +1,3 @@
-[submodule "shearlets"]
-	path = shearlets
-	url = https://github.com/ygaostu/shearlets.git
 [submodule "model"]
 	path = model
 	url = https://github.com/ygaostu/shearlets.git
