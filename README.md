@@ -29,7 +29,7 @@ Light Field (SSLF). It typically consists of pre-shearing, shearlet system const
 ## Getting started ##
 ### Python requirements ###
 ``` bash
-$ git clone --recurse-submodules git@github.com:ygaostu/Shearlet-Transform-TensorFlow.git
+$ git clone --recurse-submodules https://github.com/ygaostu/Shearlet-Transform-TensorFlow.git
 $ cd Shearlet-Transform-TensorFlow
 $ docker build -t tf1:1.0 .
 ```
